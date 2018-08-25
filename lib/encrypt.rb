@@ -1,10 +1,12 @@
 require './lib/enigma'
+require 'date'
 
 
 input_filename      = ARGV[0]
 unencrypted_message = File.read input_filename
 
 
+date  = Date.today.strftime("%d%m%y")
   # -- Chosen File Architecture -- #
 
 # Write the output file
