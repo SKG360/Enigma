@@ -1,15 +1,14 @@
-require "date"
+
 
 class Enigma
   def initialize
 
   end
 
-  def encrypt(my_message, "12345", Date.today)
-    @my_message   = my_message
+  def encrypt(my_message, key, date)
+    @date         = date
     @key          = key
-    
+    @my_message   = my_message
   end
-
 
 end
