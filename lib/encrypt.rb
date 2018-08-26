@@ -3,15 +3,18 @@ require 'date'
 
 
 input_filename      = ARGV[0]
-unencrypted_message = File.read input_filename
+output_filename     = ARGV[1]
 
+# unencrypted_message = File.read input_filename
+# File.write output_filename, enigma.encrypt
 
 date  = Date.today.strftime("%d%m%y")
-  # -- Chosen File Architecture -- #
 
-# Write the output file
-output_filename = ARGV[1]
-File.write output_filename, enigma.encrypt
-# encrypted_message = enigma.encrypt
-
-# print file, key, and date
+class Encrypt
+  def initialize(input_filename, output_filename)
+    input_filename = @input_filename
+    output_filename = @output_filename
+  end
+  #input_filename => ARGV[0] => message.txt
+  #output_filename => ARGV[1] => encrypted.txt
+end
