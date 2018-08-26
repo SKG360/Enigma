@@ -19,6 +19,12 @@ class Encrypt
   def check_local_files
     @directory_files = Dir.glob("*.txt")
   end
+
+  def found_file?
+    check_local_files.include?("message.txt")
+  end
+
+  
   #input_filename => ARGV[0] => message.txt
   #output_filename => ARGV[1] => encrypted.txt
 end
