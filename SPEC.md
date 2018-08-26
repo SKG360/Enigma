@@ -53,7 +53,14 @@ Encrypting a Message
 Four characters are encrypted at a time.
 #test_it_can_can_convert_to_array
 #test_it_can_slice_array
-#test_it_can_pop_sliced_character
+#test_it_can_pop_sliced_characters
+
+#test_it_can_generate_correct_four_digits_from_key
+e = Enigma.new
+expected = 8689 # integer
+actual = e.last_four_digits_of_squared # must return integer
+assert_equal expected, actual
+
 
 
 The first character is rotated forward by the “A” rotation plus the “A offset”
@@ -76,7 +83,7 @@ The fourth character is rotated forward by the “D” rotation plus the “D of
 ### Decrypting a Message
 The offsets and keys can be calculated by the same methods above. Then each character is rotated backwards instead of forwards.
 
-Cracking a Key
+### Cracking a Key
 When the key is not known, the offsets can still be calculated from the message date. We believe that each enemy message ends with the characters "..end..". Use that to determine when you’ve correctly guessed the key.
 
 
