@@ -38,6 +38,14 @@ class Encrypt
     end
   end
 
+
+  def write_to_file
+    if found_duplicate_file?
+      "WARNING: the target file already exists. Do you want to overwrite?"
+    elsif 
+      " "
+    end
+  end
   
   
   #input_filename => ARGV[0] => message.txt

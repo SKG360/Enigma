@@ -36,4 +36,10 @@ class EncryptTest < Minitest::Test
         assert_equal false, e.found_duplicate_file?
     end
 
+    def test_it_gives_warning_before_overwriting_destination_file
+        e = Encrypt.new("message.txt", "encrypted.txt")
+        assert_equal false, e.found_duplicate_file?
+    end
+
+
 end
