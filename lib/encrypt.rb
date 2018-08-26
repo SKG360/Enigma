@@ -24,16 +24,21 @@ class Encrypt
     check_local_files.include?(@input_filename)
   end
 
+  def found_duplicate_file?
+    check_local_files.include?(@output_filename)
+  end
+
   def read_from_file
     # binding.pry
     if found_file?
       @message_text = File.read(@input_filename)
       # binding.pry
     else
-      "File not found"
+      "ERROR: File not found"
     end
   end
 
+  
   
   #input_filename => ARGV[0] => message.txt
   #output_filename => ARGV[1] => encrypted.txt
