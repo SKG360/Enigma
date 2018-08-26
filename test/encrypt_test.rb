@@ -44,10 +44,16 @@ class EncryptTest < Minitest::Test
     end
 
     def test_it_can_read_output_file_for_output_string
+        skip
         e = Encrypt.new("message.txt", "encrypted.txt")
         assert_equal "A string of encrypted data", e.read_from_file("encrypted.txt")
     end
 
-    
-
+    def test_it_can_transfer
+        skip # skipped because it acts on files
+        e = Encrypt.new("message.txt", "encrypted.txt")   
+        output_string = e.read_from_file("message.txt")
+        e.write_to_file(output_string)
+        assert_equal e.read_from_file("message.txt"), e.read_from_file("encrypted.txt")
+    end
 end

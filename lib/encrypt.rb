@@ -1,10 +1,6 @@
 require './lib/enigma'
 require 'date'
 
-
-input_filename      = ARGV[0]
-output_filename     = ARGV[1]
-
 # unencrypted_message = File.read input_filename
 # File.write output_filename, enigma.encrypt
 
@@ -36,18 +32,27 @@ class Encrypt
     end
   end
 
+  def display_warning_and_option(encrypted_string)
+    p "WARNING: the target file already exists. Do you want to overwrite? (y)es, (n)o"
+    print ">"
+    #can't use gets because of terminal args
+    reply = $stdin.gets.chomp.to_s
+    if reply == 'y'
+      File.open(@output_filename,'w') { |file| file.write(encrypted_string)}
+    end
+  end
 
-  def write_to_file(target_file, encrypted_string)
+  def write_to_file(encrypted_string)
     if found_duplicate_file?
-      "WARNING: the target file already exists. Do you want to overwrite?"
+      display_warning_and_option(encrypted_string)
     elsif 
-      File.open(target_file,'w') { |file| file.write(encrypted_string)}
+      File.open(@output_filename,'w') { |file| file.write(encrypted_string)}
     end
   end
 end
 
+# encoded_text = 'Next test output string'
+# e = Encrypt.new(ARGV[0], ARGV[1])
+# e.write_to_file(encoded_text)
 
-  
-  #input_filename => ARGV[0] => message.txt
-  #output_filename => ARGV[1] => encrypted.txt
 
