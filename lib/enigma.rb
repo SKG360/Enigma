@@ -1,6 +1,7 @@
 require 'pry'
 
 class Enigma
+
   def initialize
     @characters   = []
   end
@@ -17,6 +18,16 @@ class Enigma
     other = [" ", ".", ","]
     @characters = letters_array + numbers_array + other
   end
+
+  def generate_key #default value for 
+    key_string = ""
+    5.times do
+        key_string += rand(9).ceil.to_s
+    end
+    return key_string
+  end
+
+  # date.strftime("%d%m%y")
 
 end
 
