@@ -12,16 +12,26 @@ date  = Date.today.strftime("%d%m%y")
 
 class Encrypt
   def initialize(input_filename, output_filename)
-    input_filename = @input_filename
-    output_filename = @output_filename
+    @input_filename = input_filename
+    @output_filename = output_filename
   end
 
   def check_local_files
-    @directory_files = Dir.glob("*.txt")
+    Dir.glob("*.txt")
   end
 
   def found_file?
-    check_local_files.include?("message.txt")
+    check_local_files.include?(@input_filename)
+  end
+
+  def read_from_file
+    # binding.pry
+    if found_file?
+      @message_text = File.read(@input_filename)
+      # binding.pry
+    else
+      "File not found"
+    end
   end
 
   
