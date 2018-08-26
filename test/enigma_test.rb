@@ -58,7 +58,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_one_sliced_message_part
-    skip
+
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"

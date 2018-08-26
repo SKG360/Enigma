@@ -45,7 +45,6 @@ class Enigma
       # turn message into parts
       message_parts = @my_message.chars.each_slice(4).to_a
       # encrypt each message part
-      require "pry"; binding.pry
       encrpyted_parts = message_parts.map do |part|
         encrypt_message_part(piece)
       end
