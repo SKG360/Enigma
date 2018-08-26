@@ -20,8 +20,8 @@ class EnigmaTest < Minitest::Test
 
   def test_for_character_map
     e = Enigma.new
-    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 
-    "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 
+    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
+    "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
     "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
     assert_equal expected, e.character_map
   end
@@ -48,7 +48,22 @@ class EnigmaTest < Minitest::Test
     e.encrypt("Hello", key, date)
     assert_equal 55555, e.key.to_i
   end
-    
-  
+
+  def test_one_encrypted_char
+    e = Enigma.new
+    date = Date.today.strftime("%d%m%y")
+    key = "82648"
+    e.encrypt("this is so secret ..end..", key, date)
+    assert_equal "6", e.encrypted_char
+  end
+
+  def test_one_sliced_message_part
+    skip
+    e = Enigma.new
+    date = Date.today.strftime("%d%m%y")
+    key = "82648"
+    e.encrypt("this is so secret ..end..", key, date)
+    assert_equal "6", e.encrypt
+  end
 
 end
