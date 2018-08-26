@@ -32,14 +32,23 @@ class EnigmaTest < Minitest::Test
     assert_equal 5, actual
   end
 
+    # to prevent letters, or characters from being in key
   def test_it_rejects_non_integer_string_character
     e = Enigma.new
-    key = "55555"
+    key = "a5555"
     date = Date.new(2017,8,26)
     e.encrypt("Hello", key, date)
-    e.key
+    assert_equal 0, e.key.to_i
   end
 
+  def test_it_converts_key_string_to_integer
+    e = Enigma.new
+    date = Date.new(2017,8,26)
+    key = "55555"
+    e.encrypt("Hello", key, date)
+    assert_equal 55555, e.key.to_i
+  end
+    
   
 
 end

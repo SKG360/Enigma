@@ -1,6 +1,7 @@
 require 'pry'
 
 class Enigma
+    attr_reader :key
 
   def initialize
     @characters   = []
