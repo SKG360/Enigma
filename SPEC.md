@@ -6,6 +6,7 @@ Each message uses a unique encryption key
 
 The key is five digits, like 41521
 #test_key_is_correct_length
+## TEST COMPLETE
 
 The first two digits of the key 
 are the “A” rotation (41)
@@ -26,7 +27,13 @@ The date of message transmission is also factored into the encryption
 
 **Consider the date in the format DDMMYY, like 240818**
 #test_it_can_convert_date_to_integer
+
+#test_that_it_generates_five_character_key_string
+## TEST COMPLETE
+
+
 #test_it_rejects_non_integer_strings
+#TEST COMPLETE
 
 **Square the numeric form (412699225) and find the last four digits (9225)**
 
@@ -97,3 +104,14 @@ pry(main)> output = e.encrypt(my_message, "12345", Date.today)
 
 pry(main)> output = e.encrypt(my_message) #key and date are optional (generate random key and use today's date)
 => # encrypted message here
+
+
+
+
+### Iteration 3
+
+# ruby ./lib/encrypt.rb message.txt encrypted.txt
+=> Created 'encrypted.txt' with the key 82648 and date 240818
+
+# ruby ./lib/decrypt.rb encrypted.txt decrypted.txt 82648 240818
+=> Created 'decrypted.txt' with the key 82648 and date 240818
