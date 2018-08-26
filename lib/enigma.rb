@@ -54,6 +54,6 @@ class Enigma
         end
       end
       encrypted_message_parts
-
+      require "pry"; binding.pry
     end
 end
