@@ -57,6 +57,6 @@ class EncryptTest < Minitest::Test
         assert_equal e.read_from_file("message.txt"), e.read_from_file("encrypted.txt")
     end
 
-
     #assert_not_equal message_text, encrypted_out_string
+
 end

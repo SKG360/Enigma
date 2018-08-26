@@ -1,10 +1,7 @@
 require './lib/enigma'
 require 'date'
 
-# unencrypted_message = File.read input_filename
-# File.write output_filename, enigma.encrypt
-
-# date  = Date.today.strftime("%d%m%y")
+date  = Date.today.strftime("%d%m%y")
 
 class Encrypt
   def initialize(input_filename, output_filename)
@@ -51,10 +48,8 @@ class Encrypt
   end
 end
    
-
 key = "82648"
 date = "250818"
-
 
 enigma = Enigma.new
 encrypted_message = enigma.encrypt("this is so secret ..end..", key, date)
@@ -62,6 +57,4 @@ encrypted_message = enigma.encrypt("this is so secret ..end..", key, date)
 e = Encrypt.new(ARGV[0], ARGV[1])
 my_message = e.read_from_file(ARGV[0])
 e.write_to_file(encrypted_message)
-
-
 
