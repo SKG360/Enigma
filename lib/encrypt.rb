@@ -28,26 +28,26 @@ class Encrypt
     check_local_files.include?(@output_filename)
   end
 
-  def read_from_file
-    # binding.pry
+  def read_from_file(file)
     if found_file?
-      @message_text = File.read(@input_filename)
-      # binding.pry
+      @message_text = File.read(file)
     else
       "ERROR: File not found"
     end
   end
 
 
-  def write_to_file
+  def write_to_file(target_file, encrypted_string)
     if found_duplicate_file?
       "WARNING: the target file already exists. Do you want to overwrite?"
     elsif 
-      " "
+      File.open(target_file,'w') { |file| file.write(encrypted_string)}
     end
   end
-  
+end
+
+
   
   #input_filename => ARGV[0] => message.txt
   #output_filename => ARGV[1] => encrypted.txt
-end
+
