@@ -25,51 +25,6 @@ class Enigma
     return key_string
   end # => five digit string
 
-  def last_four(date)                          # => "240818"
-    date_square   = (date.to_i ** 2).to_s # => "62909669124"
-    date_square[-4..-1]                   # =>        "9124"
-  end
-
-  def offset_A(date, key)
-    last_four(date)[-4].to_i + key[0..1].to_i
-  end
-  def offset_B(date, key)
-    last_four(date)[-3].to_i + key[0..1].to_i
-  end
-  def offset_C(date, key)
-    last_four(date)[-2].to_i + key[0..1].to_i
-  end
-  def offset_D(date, key)
-    last_four(date)[-1].to_i + key[0..1].to_i
-  end
-
-  def encrypted_character(character, rotation_type)
-    date = "260818"
-    key = "57894"
-    if rotation_type == "A"
-      # NO IMPLICIT CONVERSION FIXNUM -> STRING
-      # test these for typing?
-      rotation = locate_self_in_array(character.downcase) + offset_A(date, key)
-    elsif rotation_type == "B"
-      rotation = locate_self_in_array(character.downcase) + offset_B(date, key)
-    elsif rotation_type == "C"
-      rotation = locate_self_in_array(character.downcase) + offset_C(date, key)
-    elsif rotation_type == "D"
-      rotation = locate_self_in_array(character.downcase) + offset_D(date, key)
-    end
-
-    new_index_num = rotation % character_map.count
-    character_map[new_index_num]
-    #working
-  end
-
-  def encrypt_four(array)
-
-    encrypted_four = []
-    if array.count > 0
-      encrypted_four << encrypted_character(array[0], "A")
-
-
   # date.strftime("%d%m%y")
   def encrypted_piece(part)
     # date  =>  "240818"
@@ -78,11 +33,6 @@ class Enigma
     offsets     = date_square[-4..-1]    # => "9124"
     rotation    = @key[0..1].to_i        # => "82"
     offset      = offsets[0].to_i        # => "9"
-
-    # encrypted_index_a = encrypted_char(part[0]), @key[0..1].to_i, offsets[0].to_i)
-    # encrypted_index_b = encrypted_char(part[1]), @key[1..2].to_i, offsets[1].to_i)
-    # encrypted_index_c = encrypted_char(part[2]), @key[2..3].to_i, offsets[2].to_i)
-    # encrypted_index_d = encrypted_char(part[3]), @key[3..4].to_i, offsets[3].to_i)
 
     #Refactor with an enumerable
     part.map.with_index do |char, index|
