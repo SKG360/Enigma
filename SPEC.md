@@ -97,3 +97,33 @@ pry(main)> output = e.encrypt(my_message, "12345", Date.today)
 
 pry(main)> output = e.encrypt(my_message) #key and date are optional (generate random key and use today's date)
 => # encrypted message here
+
+
+
+## Iteration 4
+Add support to your Enigma class for cracking an encryption, that is decrypting a message without being given the key. Add a crack method to your Enigma class that takes an encrypted message as an argument. This method can optionally take a date to use for cracking as a second argument. If no date is given, it should use today’s date for cracking.
+
+The Enigma class should respond to the following interaction pattern:
+
+pry(main)> require 'date'
+=> true
+
+pry(main)> require './lib/enigma'
+=> true
+
+pry(main)> e = Enigma.new
+=> #<Enigma:0x00007ff90f24cb78...>
+
+pry(main)> my_message = "this is so secret ..end.."
+=> "this is so secret ..end.."
+
+pry(main)> output = e.encrypt(my_message, "12345", Date.today)
+=> # encrypted message here
+
+pry(main)> e.crack(output, Date.today)
+=> "this is so secret ..end.."
+
+pry(main)> e.crack(output) # Date is optional, use today's date
+=> "this is so secret ..end.."
+Additionally, you should create a Runner file called crack.rb that takes three command line arguments. The first is an existing file that contains an encrypted message. The second is a file where your program should write the cracked message. The third is the date to be used for cracking. In addition to writing to the cracked message to the file, your program should output to the screen the file it wrote to, the key used for cracking, and the date used for cracking.
+

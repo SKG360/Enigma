@@ -116,6 +116,7 @@ class Enigma
 end
 
   def decrypt()
+  end
 
 e = Enigma.new
 date = "260818"
