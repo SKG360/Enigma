@@ -37,16 +37,16 @@ class Enigma
     rotation    = @key[0..1].to_i        # => "82"
     offset      = offsets[0].to_i        # => "9"
 
-    #Refactor with an enumberable
-
-    part.map.with_index do |char, index|
-      encrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
-    end
-
     # encrypted_index_a = encrypted_char(part[0]), @key[0..1].to_i, offsets[0].to_i)
     # encrypted_index_b = encrypted_char(part[1]), @key[1..2].to_i, offsets[1].to_i)
     # encrypted_index_c = encrypted_char(part[2]), @key[2..3].to_i, offsets[2].to_i)
     # encrypted_index_d = encrypted_char(part[3]), @key[3..4].to_i, offsets[3].to_i)
+
+    #Refactor with an enumberable
+    part.map.with_index do |char, index|
+      encrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
+    end
+
   end
 
     def encrypted_char(character, rotation, offset)
@@ -54,21 +54,29 @@ class Enigma
       char_array  = character_map
       sum = char_array.index(character) + rotation + offset
           # => "110"
-
       encrypted_char = char_array[sum % char_array.length]
-
-
     end
 
-    def encrpyted_parts
+    def encrypted_parts
       # turn message into parts
       message_parts = @my_message.chars.each_slice(4).to_a
       # encrypt each message part
-
       encrypted_message_parts = message_parts.map do |part|
         encrypted_piece(part)
         end
       encrypted_message_parts.join
+    end
 
+    def decrypted_message
+      decrypted_slice = encrypted_parts.chars.each_slice(4).to_a
+require "pry"; binding.pry
+    end
+
+    def decrypted_char
+      char_array  = character_map.reverse
+
+      sum = char_array.index("6") + 82 + 9
+          # => "110"
+      encrypted_char = char_array[sum % char_array.length]
     end
 end

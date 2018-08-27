@@ -53,8 +53,9 @@ class EnigmaTest < Minitest::Test
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
-    e.encrypt("this is so secret ..end..", key, date)
-    assert_equal "6", e.encrypted_char(['t','h','i','s'])
+    actual = e.encrypted_char("this is so secret ..end.."[0], key[0..1].to_i, "9".to_i)
+
+    assert_equal "6", actual
   end
 
   def test_one_sliced_message_part
@@ -63,7 +64,7 @@ class EnigmaTest < Minitest::Test
     date = Date.today.strftime("%d%m%y")
     key = "82648"
     e.encrypt("this is so secret ..end..", key, date)
-    assert_equal ["6", "u", "v", "5"], e.encrpyted_parts
+    assert_equal ["6", "8", "9", "5"], e.encrypted_parts[0..3].chars
   end
 
   def test_the_encrypted_message
@@ -74,9 +75,26 @@ class EnigmaTest < Minitest::Test
 
     e.encrypt("this is so secret ..end..", key, date)
     expected = "6895k9gk5cy5r3fr6yzlrb4ll"
-    assert_equal expected, e.encrpyted_parts
+    assert_equal expected, e.encrypted_parts
   end
 
+  def test_the_first_slice_of_the_encrypted_message
+    e = Enigma.new
+    date = Date.today.strftime("%d%m%y")
+    key = "82648"
+
+    e.encrypt("this is so secret ..end..", key, date)
+    assert_equal "this", e.decrypted_char
+  end
+
+  def test_the_first_slice_of_the_encrypted_message
+    e = Enigma.new
+    date = Date.today.strftime("%d%m%y")
+    key = "82648"
+
+    e.encrypt("this is so secret ..end..", key, date)
+    assert_equal "this", e.decrypted_message
+  end
 
 
 end
