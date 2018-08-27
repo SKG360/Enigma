@@ -113,7 +113,30 @@ pry(main)> output = e.encrypt(my_message) #key and date are optional (generate r
 => # encrypted message here
 
 
+#Add support for decrypting a message. Add a method decrypt to your Enigma class that outputs a String of the decrypted message. This method takes two arguments. The first is the encrypted message as a String. The second is the Key that was used to encrypt the message. The decrypt method can optionally take a date as the third argument. If no date is given, this method should use today’s date for decryption.
 
+The Enigma class should respond to the following interaction pattern:
+
+pry(main)> require 'date'
+=> true
+
+pry(main)> require './lib/enigma'
+=> true
+
+pry(main)> e = Enigma.new
+=> #<Enigma:0x00007ff90f24cb78...>
+
+pry(main)> my_message = "this is so secret ..end.."
+=> "this is so secret ..end.."
+
+pry(main)> output = e.encrypt(my_message, "12345", Date.today)
+=> # encrypted message here
+
+pry(main)> e.decrypt(output, "12345", Date.today)
+=> "this is so secret ..end.."
+
+pry(main)> e.decrypt(output, "12345") # Date is optional (use today's date)
+=> "this is so secret ..end.."
 
 ### Iteration 3
 

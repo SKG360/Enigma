@@ -1,59 +1,101 @@
 require 'pry'
+require 'date'
 
 class Enigma
-    attr_reader :key
+    attr_reader :key # why is this here?
 
   def initialize
     @characters   = []
+    @todays_date  = Date.today.strftime("%d%m%y")
   end
 
-  def encrypt(my_message, key, date)
-    @date         = date
-    @key          = key
-    @my_message   = my_message
-  end
 
   def character_map
     letters_array = [*'a'..'z']
     numbers_array = [*'0'..'9']
     other = [" ", ".", ","]
     @characters = letters_array + numbers_array + other
-  end
+  end # => full character array [a...,].count => 39
 
-  def generate_key #default value for
+  def locate_self_in_array(unit)
+    @index_location = 0
+    while character_map[@index_location] != unit
+      if character_map[@index_location] == unit
+        return @index_location
+      elsif @index_location += 1
+      end
+    end
+    return @index_location
+  end
+  # default value 
+  def random_key 
     key_string = ""
     5.times do
         key_string += rand(9).ceil.to_s
     end
     return key_string
-  end
+  end # => five digit string
 
-  # date.strftime("%d%m%y")
+  # rename
   def encrypted_char(part)
       # date  =>  "240818"
-      # key   =>  "82648"
-      char_array  = character_map
-      date_square = (@date.to_i ** 2).to_s # => "62909669124"
-      offsets     = date_square[-4..-1]    # => "9124"
-      rotation    = @key[0..1].to_i        # => "82"
-      offset      = offsets[0].to_i        # => "9"
-      sum = char_array.index(part[0]) + rotation + offset
-                                           # => "110"
-      encrypted_char = char_array[sum % char_array.length]
+      
+      char_array    = character_map
+      # char_array.count = 39
 
-    end
+      date_square   = (@todays_date.to_i ** 2).to_s 
+                                     # => "62909669124"
+                                            # => "9124"
+      offset_A      = date_square[-4].to_i  # => "9"
+      offset_B      = date_square[-3].to_i  # =>  "1"
+      offset_C      = date_square[-2].to_i  # =>   "2"
+      offset_D      = date_square[-1].to_i  # =>    "4"
 
-    def encrpyted_parts
-      # turn message into parts
-      message_parts = @my_message.chars.each_slice(4).to_a
-      # encrypt each message part
-      # encrypted_message_parts = []
-      encrypted_message_parts = message_parts.map do |part|
-        part.map do |mini_part|
-        encrypted_char(mini_part)
-        end
-      end
-      encrypted_message_parts
-      require "pry"; binding.pry
+      @key = "82648"
+      key_pair_A    = @key[0..1].to_i       # => "82"
+      key_pair_B    = @key[1..2].to_i       # =>  "26"
+      key_pair_C    = @key[2..3].to_i       # =>   "64"
+      key_pair_D    = @key[3..4].to_i       # =>    "48"
+
+      rotation_A    = offset_A + key_pair_A # =>  9+82 = 91
+      rotation_B    = offset_B + key_pair_B # =>   1+26 = 27 
+      rotation_C    = offset_C + key_pair_C # =>    2+64 = 66
+      rotation_D    = offset_D + key_pair_D # =>     4+48 = 52
+
+  end
+
+
+  def encrypt_four(four_character_string_array)
+    four_character_string_array.map do |character|
+      locate_self_in_array(character.downcase)
     end
+  end
+
+  def message_array(message)
+    message_slices = message.chars.each_slice(slice_length).to_a
+    # => [["H", "i", " ", "t"], ["h", "e", "r", "e"], ["!"]]
+
+  end
+
+  def encryption_array(slice_length)
+
+    encrypted_message_slices = []
+    message_slices.map do |four_digit_slice|
+      encrypt_four(four_digit_slice)
+    end
+    encrypted_message_slices.join
+  end
+
+  def encrypt(my_message, key = random_key, date = @todays_date)
+    @date         = date
+    @key          = key
+    @my_message   = my_message
+
+    return encryption_array.join
+  end
 end
+
+e = Enigma.new
+# p e.encrypt("Hi there!")
+
+

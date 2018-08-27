@@ -1,3 +1,5 @@
+#runner
+
 require './lib/enigma'
 require 'date'
 
@@ -42,19 +44,29 @@ class Encrypt
   def write_to_file(encrypted_string)
     if found_duplicate_file?
       display_warning_and_option(encrypted_string)
-    elsif 
+    elsif
       File.open(@output_filename,'w') { |file| file.write(encrypted_string)}
     end
   end
 end
-   
+
 key = "82648"
 date = "250818"
 
 enigma = Enigma.new
 encrypted_message = enigma.encrypt("this is so secret ..end..", key, date)
 
-e = Encrypt.new(ARGV[0], ARGV[1])
-my_message = e.read_from_file(ARGV[0])
-e.write_to_file(encrypted_message)
+# added for convenience
+if ARGV[0] == nil
+  ARGV[0] = "message.txt"
+end
 
+if ARGV[1] == nil
+  ARGV[1] = "encrypted.txt"
+end
+
+e = Encrypt.new(ARGV[0], ARGV[1])
+# binding.pry
+my_message = e.read_from_file(ARGV[0])
+# binding.pry
+e.write_to_file(encrypted_message)

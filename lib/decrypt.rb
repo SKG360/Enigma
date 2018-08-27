@@ -1,3 +1,5 @@
+#runner
+
 require './lib/enigma'
 require 'pry'
 
@@ -7,13 +9,13 @@ decryption_key            = ARGV[2]
 decryption_date           = ARGV[3]
 
 
-class Decrypt 
-    def initialize(encrypted_filename, 
+class Decrypt
+    def initialize(encrypted_filename,
             decrypted_file_desination,
             decryption_key,
             decryption_date)
 
-        encrypted_filename        = @encrypted_filename 
+        encrypted_filename        = @encrypted_filename
         decrypted_file_desination = @decrypted_file_desination
         decryption_key            = @decryption_key
         decryption_date           = @decryption_date

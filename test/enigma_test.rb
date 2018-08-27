@@ -67,16 +67,28 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_the_encrypted_message
-
+    skip
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
     
-    e.encrypt("this is so secret ..end..", key, date)
     expected = "6uv5kv5k51k5rp4r6kllr0qll"
-    assert_equal expected, e.encrpyted_parts
+    assert_equal expected, e.encrypt("this is so secret ..end..", key, date)
   end
 
+  def test_it_can_locate_self_in_array
+    enigma = Enigma.new
+    
+    assert_equal 0, enigma.locate_self_in_array("a")
+    assert_equal 27, enigma.locate_self_in_array("1")
+    assert_equal 26, enigma.locate_self_in_array("0")
+    assert_equal 36, enigma.locate_self_in_array(" ")
+    assert_equal 37, enigma.locate_self_in_array(",")
+    assert_equal 38, enigma.locate_self_in_array(".")
+  end
 
-
+  def test_it_can_encrypt_four_string_character_array
+    enigma = Enigma.new
+    assert_equal [7, 8, 36, 19], e.encrypt_four(["H", "i", " ", "t"])
+  end
 end
