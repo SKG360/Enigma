@@ -34,11 +34,11 @@ class EnigmaTest < Minitest::Test
     # to prevent letters, or characters from being in key
   def test_it_rejects_non_integer_string_character
     key = "a5555"
-    assert_equal 0, e.key.to_i
+    assert_equal 0, key.to_i
   end
 
   def test_one_encrypted_char
-    skip
+    # skip
     e = Enigma.new
     date = Date.new(2017,8,26).strftime("%d%m%y")
     key = "82648"
@@ -47,122 +47,31 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_one_sliced_message_part
-    skip
+    # skip
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
     e.encrypt("this is so secret ..end..", key, date)
-    assert_equal ["6", "8", "9", "5"], e.encrypted_parts[0..3].chars
+    assert_equal ["4", ",", "9", "5"], e.encrypted_parts[0..3].chars
   end
 
   def test_the_encrypted_message
-    skip
+    # skip
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
-    expected = "6uv5kv5k51k5rp4r6kllr0qll"
+    expected = "4,95iagk3gy5p7fr42zlpf4lj"
     assert_equal expected, e.encrypt("this is so secret ..end..", key, date)
   end
 
-  def test_it_can_locate_self_in_array
-    skip
-    enigma = Enigma.new
-    
-    assert_equal 0, enigma.locate_self_in_array("a")
-    assert_equal 27, enigma.locate_self_in_array("1")
-    assert_equal 26, enigma.locate_self_in_array("0")
-    assert_equal 36, enigma.locate_self_in_array(" ")
-    assert_equal 37, enigma.locate_self_in_array(",")
-    assert_equal 38, enigma.locate_self_in_array(".")
-  end
-
-  def test_it_can_encrypt_four_string_character_array
-    skip
-    enigma = Enigma.new
-    assert_equal [7, 8, 36, 19], e.encrypt_four(["H", "i", " ", "t"])
+  def test_full_phrase_encryption
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
-
     e.encrypt("this is so secret ..end..", key, date)
-    expected = "6895k9gk5cy5r3fr6yzlrb4ll"
+    expected = "4,95iagk3gy5p7fr42zlpf4lj"
     assert_equal expected, e.encrypted_parts
   end
-
-  def test_the_first_slice_of_the_encrypted_message
-    skip
-    e = Enigma.new
-    date = Date.today.strftime("%d%m%y")
-    key = "82648"
-
-    e.encrypt("this is so secret ..end..", key, date)
-    assert_equal "this", e.decrypted_char
-  end
-
-  def test_the_first_slice_of_the_encrypted_message
-    skip
-    e = Enigma.new
-    date = Date.today.strftime("%d%m%y")
-    key = "82648"
-
-    e.encrypt("this is so secret ..end..", key, date)
-    # assert_equal "this", e.decrypted_char('6', 82, 9)
-    assert_equal "this", e.decrypt
-  end
-
-
-
-
-
-
-
-
-
-
-  #test_default_date_is_today
-
-
-  #test_default_key_is_generated
-
-
-
-  def test_it_calculates_last_four_of_date
-    skip
-    e = Enigma.new
-    date = "260818"
-    assert_equal "9124", e.last_four(date)
-  end
-
-
-  def test_it_calculates_ecryption_rotations
-    skip
-    e = Enigma.new
-    date = "260818"
-    key = "57894"
-    assert_equal 66, e.offset_A(date, key)
-    assert_equal 58, e.offset_B(date, key)
-    assert_equal 59, e.offset_C(date, key)
-    assert_equal 61, e.offset_D(date, key)
-  end
-
-  def test_different_types_same_character
-    skip
-    e = Enigma.new
-    assert_equal "1", e.encrypted_character("a", "A")
-    assert_equal "t", e.encrypted_character("a", "B")
-    assert_equal "u", e.encrypted_character("a", "C")
-    assert_equal "w", e.encrypted_character("a", "D")
-  end
-
-  def test_same_type_different_character
-    skip
-    e = Enigma.new
-    assert_equal "1", e.encrypted_character("a", "A")
-    assert_equal "2", e.encrypted_character("b", "A")
-    assert_equal "3", e.encrypted_character("c", "A")
-    assert_equal "4", e.encrypted_character("d", "A")
-  end
-
 
 
   # def test_one_to_four_digit_encryption
@@ -176,10 +85,5 @@ class EnigmaTest < Minitest::Test
   #   assert_equal "1uwz", e.encrypt_four(["a","b","c","d"])
   # end
 
-  def test_it_can_encrypt_phrase
-    skip
-    e = Enigma.new
-    assert_equal "8x57cqd f4xw", e.encrypted_text("Hello World!")
-    assert_equal "81tt3t7t9qaw,3rccqw3i w3945w", e.encrypted_text("Hi, can I talk to Churchill?")
-  end
+ 
 end
