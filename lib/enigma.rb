@@ -10,16 +10,21 @@ class Enigma
   end
 
 
-  def character_map
+  def character_map(type)
     letters_array = [*'a'..'z']
     numbers_array = [*'0'..'9']
     other = [" ", ".", ","]
-    return letters_array + numbers_array + other
+    special_characters = []
+    if type == "standard"
+      return letters_array + numbers_array + other
+    elsif type == "extended"
+      return letters_array + numbers_array + other + special_characters
+    end
   end # => full character array [a...,].count => 39
 
   def locate_self_in_array(unit)
     @index_location = 0
-    character_map.each  do |character|
+    character_map("standard").each  do |character|
       if character == unit
         return @index_location
       elsif
@@ -70,8 +75,8 @@ class Enigma
       rotation = locate_self_in_array(character.downcase) + offset_D(date, key)
     end
 
-    new_index_num = rotation % character_map.count
-    character_map[new_index_num]
+    new_index_num = rotation % character_map("standard").count
+    character_map("standard")[new_index_num]
     #working
   end 
 
@@ -113,14 +118,19 @@ class Enigma
 
     return encrypted_text(my_message, key, @date - @todays_date).join
   end
-end
 
   def decrypt()
   end
 
+  def crack(output, date= Date.today)
+    
+
+  end
+end
 e = Enigma.new
 date = "260818"
 key = "57894"
+e.(my_message, key = random_key, date = @todays_date)
 # binding.pry
 
 

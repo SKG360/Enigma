@@ -100,8 +100,8 @@ pry(main)> output = e.encrypt(my_message) #key and date are optional (generate r
 
 
 
-## Iteration 4
-Add support to your Enigma class for cracking an encryption, that is decrypting a message without being given the key. Add a crack method to your Enigma class that takes an encrypted message as an argument. This method can optionally take a date to use for cracking as a second argument. If no date is given, it should use today’s date for cracking.
+## Iteration 4 
+Add support to your Enigma class for cracking an encryption, that is decrypting a message without being given the key. Add a crack method to your Enigma class that takes an encrypted message as an argument. This method can optionally take a **date to use for cracking as a second argument**. If no date is given, it should use today’s date for cracking.
 
 The Enigma class should respond to the following interaction pattern:
 
