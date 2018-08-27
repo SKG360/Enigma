@@ -12,7 +12,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_the_message_string
-    skip
+
     e = Enigma.new
     my_message = "this is so secret ..end.."
     expected = "this is so secret ..end.."
@@ -20,6 +20,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_for_character_map
+    skip
     e = Enigma.new
     expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
     "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
@@ -54,6 +55,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_one_encrypted_char
+    skip
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
@@ -63,7 +65,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_one_sliced_message_part
-
+    skip
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
@@ -72,7 +74,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_the_encrypted_message
-
+    skip
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
@@ -83,6 +85,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_the_first_slice_of_the_encrypted_message
+    skip
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
@@ -92,11 +95,13 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_the_first_slice_of_the_encrypted_message
+
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
 
     e.encrypt("this is so secret ..end..", key, date)
+    # assert_equal "this", e.decrypted_char('6', 82, 9)
     assert_equal "this", e.decrypt
   end
 
@@ -117,6 +122,7 @@ class EnigmaTest < Minitest::Test
 
 
   def test_it_calculates_last_four_of_date
+    skip
     e = Enigma.new
     date = "260818"
     assert_equal "9124", e.last_four(date)
@@ -135,14 +141,16 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_different_types_same_character
+    skip
     e = Enigma.new
     assert_equal "1", e.encrypted_character("a", "A")
     assert_equal "t", e.encrypted_character("a", "B")
     assert_equal "u", e.encrypted_character("a", "C")
     assert_equal "w", e.encrypted_character("a", "D")
   end
-  
+
   def test_same_type_different_character
+    skip
     e = Enigma.new
     assert_equal "1", e.encrypted_character("a", "A")
     assert_equal "2", e.encrypted_character("b", "A")
@@ -152,17 +160,19 @@ class EnigmaTest < Minitest::Test
 
 
 
-  def test_one_to_four_digit_encryption
-    #more important than it seems
-    #try translating a nil string!
-    e = Enigma.new
-    assert_equal "1", e.encrypt_four(["a"])
-    assert_equal "1u", e.encrypt_four(["a","b"])
-    assert_equal "1uw", e.encrypt_four(["a","b","c")
-    assert_equal "1uwz", e.encrypt_four(["a","b","c","d"])
-  end
+  # def test_one_to_four_digit_encryption
+  #   skip
+  #   #more important than it seems
+  #   #try translating a nil string!
+  #   e = Enigma.new
+  #   assert_equal "1", e.encrypt_four(["a"])
+  #   assert_equal "1u", e.encrypt_four(["a","b"])
+  #   assert_equal "1uw", e.encrypt_four(["a","b","c")
+  #   assert_equal "1uwz", e.encrypt_four(["a","b","c","d"])
+  # end
 
   def test_it_can_encrypt_phrase
+    skip
     e = Enigma.new
     assert_equal "8x57cqd f4xw", e.encrypted_text("Hello World!")
     assert_equal "81tt3t7t9qaw,3rccqw3i w3945w", e.encrypted_text("Hi, can I talk to Churchill?")

@@ -9,6 +9,13 @@ class Enigma
     @todays_date  = Date.today.strftime("%d%m%y")
   end
 
+  def encrypt(my_message, key = random_key, date = @todays_date)
+    @date         = date
+    @key          = key
+    @my_message   = my_message
+
+    # return encrypted_text(my_message, key, @date - @todays_date).join
+  end
 
   def character_map
     letters_array = [*'a'..'z']
@@ -65,13 +72,16 @@ class Enigma
           decrypted_section(slice)
       end
       decrypted_message_slices
+require "pry"; binding.pry
     end
 
     def decrypted_section(slice)
+      # - - - - Refactor as separate method - - - -  #
       date_square = (@date.to_i ** 2).to_s # => "62909669124"
       offsets     = date_square[-4..-1]    # => "9124"
       rotation    = @key[0..1].to_i        # => "82"
       offset      = offsets[0].to_i        # => "9"
+      # - - - - -seprate method - - - -  - - - - - -#
 
       slice.map.with_index do |char, index|
         decrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
@@ -81,9 +91,10 @@ class Enigma
     def decrypted_char(character, rotation, offset)
       char_array  = character_map.reverse
 
-      sum = char_array.index("6") + rotation + offset
+      sum = char_array.index(character) + rotation + offset
 
       encrypted_char = char_array[sum % char_array.length]
+
     end
 end
 
@@ -93,11 +104,3 @@ end
   #     encrypt_four(four_digit_slice)
   #   end.join
   # end
-
-  def encrypt(my_message, key = random_key, date = @todays_date)
-    @date         = date
-    @key          = key
-
-    return encrypted_text(my_message, key, @date - @todays_date).join
-  end
-end
