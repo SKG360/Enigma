@@ -35,9 +35,8 @@ class EnigmaTest < Minitest::Test
   def test_it_rejects_non_integer_string_character
     e = Enigma.new
     key = "a5555"
-    date = Date.new(2017,8,26).strftime("%d%m%y") # "270818"
-    encr = e.encrypt("Hello", key, date)
-    binding.pry
+    # date = Date.new(2017,8,26).strftime("%d%m%y") # "270818"
+    # e.encrypt("Hello", key, date)
     assert_equal 0, e.key.to_i
   end
 
