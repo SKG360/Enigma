@@ -87,7 +87,7 @@ The offsets and keys can be calculated by the same methods above. Then each char
 ### Cracking a Key
 When the key is not known, the offsets can still be calculated from the message date. We believe that each enemy message ends with the characters "..end..". Use that to determine when you’ve correctly guessed the key.
 
-Cracking a Key
+**Cracking a Key**
 When the key is not known, the offsets can still be calculated from the message date. We believe that each enemy message ends with the characters "..end..". **Use that to determine when you’ve correctly guessed the key.**
 
 

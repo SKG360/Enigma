@@ -11,16 +11,13 @@ class EnigmaTest < Minitest::Test
     assert_instance_of Enigma, e
   end
 
-  def test_the_message_string
-
+  def test_the_message_string_exists
     e = Enigma.new
     my_message = "this is so secret ..end.."
-    expected = "this is so secret ..end.."
-    assert_equal expected, e.encrypt(my_message, "12345", Date.today)
+    assert_instance_of String, e.encrypt(my_message, "12345", Date.today.strftime("%d%m%y"))
   end
 
   def test_for_character_map
-    skip
     e = Enigma.new
     expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
     "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
@@ -29,26 +26,25 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_that_it_generates_five_character_key_string
-    skip
     e = Enigma.new
-    actual = e.generate_key.length
+    actual = e.random_key.length
     assert_equal 5, actual
   end
 
     # to prevent letters, or characters from being in key
   def test_it_rejects_non_integer_string_character
-    skip
     e = Enigma.new
     key = "a5555"
-    date = Date.new(2017,8,26)
-    e.encrypt("Hello", key, date)
+    date = Date.new(2017,8,26).strftime("%d%m%y") # "270818"
+    encr = e.encrypt("Hello", key, date)
+    binding.pry
     assert_equal 0, e.key.to_i
   end
 
   def test_it_converts_key_string_to_integer
     skip
     e = Enigma.new
-    date = Date.new(2017,8,26)
+    date = Date.new(2017,8,26).strftime("%d%m%y")
     key = "55555"
     e.encrypt("Hello", key, date)
     assert_equal 55555, e.key.to_i
@@ -57,10 +53,9 @@ class EnigmaTest < Minitest::Test
   def test_one_encrypted_char
     skip
     e = Enigma.new
-    date = Date.today.strftime("%d%m%y")
+    date = Date.new(2017,8,26).strftime("%d%m%y")
     key = "82648"
     actual = e.encrypted_char("this is so secret ..end.."[0], key[0..1].to_i, "9".to_i)
-
     assert_equal "6", actual
   end
 
@@ -75,16 +70,15 @@ class EnigmaTest < Minitest::Test
 
   def test_the_encrypted_message
     skip
-<<<<<<< HEAD
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
-    
     expected = "6uv5kv5k51k5rp4r6kllr0qll"
     assert_equal expected, e.encrypt("this is so secret ..end..", key, date)
   end
 
   def test_it_can_locate_self_in_array
+    skip
     enigma = Enigma.new
     
     assert_equal 0, enigma.locate_self_in_array("a")
@@ -96,9 +90,9 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_encrypt_four_string_character_array
+    skip
     enigma = Enigma.new
     assert_equal [7, 8, 36, 19], e.encrypt_four(["H", "i", " ", "t"])
-=======
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
@@ -119,7 +113,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_the_first_slice_of_the_encrypted_message
-
+    skip
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
@@ -200,6 +194,5 @@ class EnigmaTest < Minitest::Test
     e = Enigma.new
     assert_equal "8x57cqd f4xw", e.encrypted_text("Hello World!")
     assert_equal "81tt3t7t9qaw,3rccqw3i w3945w", e.encrypted_text("Hi, can I talk to Churchill?")
->>>>>>> af1180a301cbcdf3313c2f479b056d8e9b68b2ce
   end
 end

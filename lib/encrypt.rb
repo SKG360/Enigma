@@ -66,7 +66,5 @@ if ARGV[1] == nil
 end
 
 e = Encrypt.new(ARGV[0], ARGV[1])
-# binding.pry
 my_message = e.read_from_file(ARGV[0])
-# binding.pry
 e.write_to_file(encrypted_message)
