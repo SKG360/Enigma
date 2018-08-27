@@ -29,17 +29,34 @@ class Enigma
   end
 
   # date.strftime("%d%m%y")
-  def encrypted_char(part)
-      # date  =>  "240818"
-      # key   =>  "82648"
+  def encrypted_piece(part)
+    # date  =>  "240818"
+    # key   =>  "82648"
+    date_square = (@date.to_i ** 2).to_s # => "62909669124"
+    offsets     = date_square[-4..-1]    # => "9124"
+    rotation    = @key[0..1].to_i        # => "82"
+    offset      = offsets[0].to_i        # => "9"
+
+    #Refactor with an enumberable
+
+    part.map.with_index do |char, index|
+      encrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
+    end
+
+    # encrypted_index_a = encrypted_char(part[0]), @key[0..1].to_i, offsets[0].to_i)
+    # encrypted_index_b = encrypted_char(part[1]), @key[1..2].to_i, offsets[1].to_i)
+    # encrypted_index_c = encrypted_char(part[2]), @key[2..3].to_i, offsets[2].to_i)
+    # encrypted_index_d = encrypted_char(part[3]), @key[3..4].to_i, offsets[3].to_i)
+  end
+
+    def encrypted_char(character, rotation, offset)
+
       char_array  = character_map
-      date_square = (@date.to_i ** 2).to_s # => "62909669124"
-      offsets     = date_square[-4..-1]    # => "9124"
-      rotation    = @key[0..1].to_i        # => "82"
-      offset      = offsets[0].to_i        # => "9"
-      sum = char_array.index(part[0]) + rotation + offset
-                                           # => "110"
+      sum = char_array.index(character) + rotation + offset
+          # => "110"
+
       encrypted_char = char_array[sum % char_array.length]
+
 
     end
 
@@ -47,13 +64,11 @@ class Enigma
       # turn message into parts
       message_parts = @my_message.chars.each_slice(4).to_a
       # encrypt each message part
-      # encrypted_message_parts = []
+
       encrypted_message_parts = message_parts.map do |part|
-        part.map do |mini_part|
-        encrypted_char(mini_part)
+        encrypted_piece(part)
         end
-      end
-      encrypted_message_parts
-      require "pry"; binding.pry
+      encrypted_message_parts.join
+
     end
 end

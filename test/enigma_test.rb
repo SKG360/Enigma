@@ -71,9 +71,9 @@ class EnigmaTest < Minitest::Test
     e = Enigma.new
     date = Date.today.strftime("%d%m%y")
     key = "82648"
-    
+
     e.encrypt("this is so secret ..end..", key, date)
-    expected = "6uv5kv5k51k5rp4r6kllr0qll"
+    expected = "6895k9gk5cy5r3fr6yzlrb4ll"
     assert_equal expected, e.encrpyted_parts
   end
 
