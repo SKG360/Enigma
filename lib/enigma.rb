@@ -42,7 +42,7 @@ class Enigma
     # encrypted_index_c = encrypted_char(part[2]), @key[2..3].to_i, offsets[2].to_i)
     # encrypted_index_d = encrypted_char(part[3]), @key[3..4].to_i, offsets[3].to_i)
 
-    #Refactor with an enumberable
+    #Refactor with an enumerable
     part.map.with_index do |char, index|
       encrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
     end
@@ -67,16 +67,30 @@ class Enigma
       encrypted_message_parts.join
     end
 
-    def decrypted_message
-      decrypted_slice = encrypted_parts.chars.each_slice(4).to_a
-require "pry"; binding.pry
+    def decrypt
+      decrypted_slices = encrypted_parts.chars.each_slice(4).to_a
+      decrypted_message_slices = decrypted_slices.map do |slice|
+          decrypted_section(slice)
+      end
+      decrypted_message_slices
     end
 
-    def decrypted_char
+    def decrypted_section(slice)
+      date_square = (@date.to_i ** 2).to_s # => "62909669124"
+      offsets     = date_square[-4..-1]    # => "9124"
+      rotation    = @key[0..1].to_i        # => "82"
+      offset      = offsets[0].to_i        # => "9"
+
+      slice.map.with_index do |char, index|
+        decrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
+      end
+    end
+
+    def decrypted_char(character, rotation, offset)
       char_array  = character_map.reverse
 
-      sum = char_array.index("6") + 82 + 9
-          # => "110"
+      sum = char_array.index("6") + rotation + offset
+
       encrypted_char = char_array[sum % char_array.length]
     end
 end

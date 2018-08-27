@@ -93,7 +93,7 @@ class EnigmaTest < Minitest::Test
     key = "82648"
 
     e.encrypt("this is so secret ..end..", key, date)
-    assert_equal "this", e.decrypted_message
+    assert_equal "this", e.decrypt
   end
 
 
