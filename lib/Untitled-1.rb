@@ -53,16 +53,10 @@ class Enigma
     end
 
     def decompose_array(string)
-      array = string.split("")
-      lowercased = array.map do |element|
-          element.downcase
-      end
-    end
-
-    def recompose_string(array_of_integers)
-      array_of_integers.map do |element|
-        character_hash.invert[element]
-      end.join
+        array = string.split("")
+        lowercased = array.map do |element|
+            element.downcase
+        end
     end
 
     def produce_index_array(array)
@@ -78,13 +72,10 @@ class Enigma
         current.map do |element|
             if current.index(element) % 4 == 0
                 current.index(element) + offset_A
-
             elsif current.index(element) % 4 == 1
                 current.index(element) + offset_B
-
             elsif current.index(element) % 4 == 2
                 current.index(element) + offset_C
-                
             else current.index(element) % 4 == 3
                 current.index(element) + offset_D
             end
@@ -92,15 +83,24 @@ class Enigma
     end
 
     def encrypt(my_message, key, date)
-      array = decompose_array(my_message)
-      offsets = produce_index_array(array)
-      new_index = apply_offset_rotations(offsets)
-      new_string = recompose_string(new_index)
+        array = decompose_array(my_message)
+        offsets = produce_index_array(array)
+        new_index = apply_offset_rotations(offsets)
+
+        new_index.map do |element|
+            character_hash.invert[element]
+        end.join
     end
+    
+
 
 end
 
 
+my_message = "this is so secret ..end.."
+key = "12345"
+date = Date.today
+
 e = Enigma.new
-# e.apply_offset_rotations(["h", "i", " ", "t", "h"])
+# e.encrypt(my_message, key, date)
 binding.pry

@@ -88,9 +88,8 @@ class EnigmaTest < Minitest::Test
         assert_equal expected, @e.apply_offset_rotations(["h", "i", " ", "t", "h", "e", "r", "e", " ", "e", "v", "e", "r", "y"])
     end
 
-    def test_recompose_string_from_integers
-      expected = "vz,v33,"
-      assert_equal expected, e.encrypt([21, 25, 38, 52, 21, 29, 42, 29, 38])
     
+    
+
 
 end
