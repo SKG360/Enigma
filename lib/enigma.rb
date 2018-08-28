@@ -1,102 +1,98 @@
 require 'pry'
 require 'date'
 
-my_message = "this is so secret ..end.."
-
 class Enigma
-    attr_reader :key
 
-  def initialize
-    @characters   = []
-    @todays_date  = Date.today.strftime("%m%d%y")
-  end
-
-  def character_map
-    letters_array = [*'a'..'z']
-    numbers_array = [*'0'..'9']
-    other = [" ", ".", ","]
-    return letters_array + numbers_array + other
-  end # => full character array [a...,].count => 39
-
-  def random_key 
-    key_string = ""
-    5.times do
-        key_string += rand(9).ceil.to_s
+    def initialize
+        @characters  = []
+        @date = Date.today
+        @date = Date.new(2018,8,27)
+        # "270818"
+        @key = "12345"
     end
-    return key_string
-  end # => five digit string
 
-  def encrypted_char(character, rotation, offset)
-    char_array  = character_map
-    sum = char_array.index(character).to_i + rotation + offset
-    char_array[sum % char_array.length]  # => "string"
-  end # => character = "t" 
-      # sum % char_array.length => 21
-      # => char_array[sum % char_array.length] = "b"
-
-  # date.strftime("%d%m%y")
-  def encrypted_piece(part)
-    # date  =>  "240818"
-    # key   =>  "82648"
-    date_square = (@todays_date.to_i ** 2).to_s # => "62909669124"
-    offsets     = date_square[-4..-1]    # => "9124"
-    rotation    = @key[0..1].to_i        # => "82"
-    offset      = offsets[0].to_i        # => "9"
-
-    #Refactor with an enumerable
-    part.map.with_index do |char, index|
-      encrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
+    def character_map
+        letters_array = [*'a'..'z']
+        numbers_array = [*'0'..'9']
+        other = [" ", ".", ","]
+        return letters_array + numbers_array + other
     end
-  end
 
-  def encrypted_parts
-    message_parts = @my_message.chars.each_slice(4).to_a
-    encrypted_message_parts = message_parts.map do |part|
-      encrypted_piece(part)
+    def character_hash
+        hash = {}
+        character_map.each do |char|
+            hash[char] = character_map.index(char)
+        end
+        hash
     end
-    encrypted_message_parts
-  end
-  # => "encrypted message string"
 
-  def encrypt(my_message, key = random_key, date = @todays_date)
-    @date         = date
-    @key          = key
-    @my_message   = my_message
-    # binding.pry
-    return encrypted_parts
-  end
+    def random_key 
+        rand(99999).to_s
+    end # => five digit string
 
-
-  def decrypt(encrypted_sting, key, date)
-    decrypted_slices = encrypted_parts.chars.each_slice(4).to_a
-    decrypted_message_slices = decrypted_slices.map do |slice|
-        decrypted_section(slice)
+    def last_four_of_date_squared(date)
+        integer_date = date.strftime("%d%m%y").to_i # => MMDDYY
+        squared = (integer_date ** 2).to_s
+        last_four = squared[-4..-1]
     end
-    decrypted_message_slices.join
-    # require "pry"; binding.pry
-  end
 
-  def decrypted_section(slice)
-    # - - - - Refactor as separate method - - - -  #
-    date_square = (@date.to_i ** 2).to_s # => "62909669124"
-    offsets     = date_square[-4..-1]    # => "9124"
-    rotation    = @key[0..1].to_i        # => "82"
-    offset      = offsets[0].to_i        # => "9"
-    # - - - - -seprate method - - - -  - - - - - -#
-
-    slice.map.with_index do |char, index|
-      decrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
+    def offset_A
+        @key[0..1].to_i + last_four_of_date_squared(@date)[0].to_i
     end
-  end
 
-  def decrypted_char(character, rotation, offset)
-    char_array  = character_map.reverse
-    sum = char_array.index(character) + rotation + offset
-    encrypted_char = char_array[sum % char_array.length]
-  end
+    def offset_B
+        @key[1..2].to_i + last_four_of_date_squared(@date)[1].to_i
+    end
+
+    def offset_C
+        @key[2..3].to_i + last_four_of_date_squared(@date)[2].to_i
+    end
+
+    def offset_D
+        @key[3..4].to_i + last_four_of_date_squared(@date)[3].to_i
+    end
+
+    def decompose_array(string)
+        array = string.split("")
+        lowercased = array.map do |element|
+            element.downcase
+        end
+    end
+
+    def produce_index_array(array)
+        rray.map do |element|
+            character_hash[element]
+        end
+    end
+
+    def apply_offset_rotations(array)
+        current = array.map do |element|
+            character_hash[element]
+        end
+        current.map do |element|
+            if current.index(element) % 4 == 0
+                current.index(element) + offset_A
+            elsif current.index(element) % 4 == 1
+                current.index(element) + offset_B
+            elsif current.index(element) % 4 == 2
+                current.index(element) + offset_C
+            else current.index(element) % 4 == 3
+                current.index(element) + offset_D
+            end
+        end
+    end
+
+    # def encrypt(my_message, key, date)
+    #     array = decompose_array(my_message)
+    #     offsets = produce_index_array(array)
+    #     new_index = apply_offset_rotations(offsets)
+
+    #     new_index.map do |element|
+    #         character_hash.invert[element]
+    #     end.join
+    # end
+
 end
 
-e = Enigma.new
-a = e.encrypt("Hello World!", "12345", "270818")
-b = e.decrypt("t6iv7z y aak" , "12345", "270818")
-binding.pry
+
+#Almost finished
