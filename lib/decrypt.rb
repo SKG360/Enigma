@@ -1,5 +1,8 @@
+#runner
+
 require './lib/enigma'
 require 'pry'
+
 
 encrypted_filename        = ARGV[0]
 decrypted_file_destination = ARGV[1]
