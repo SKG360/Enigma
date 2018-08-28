@@ -21,5 +21,5 @@ end
 
 enigma = Enigma.new
 
-decrypted_string = enigma.decrypt(read_from_file("encrypted.txt"), "12345", "270818")
+decrypted_string = enigma.decrypt(read_from_file(encrypted_file), encryption_key, encryption_date)
 write_to_file(decrypted_string)

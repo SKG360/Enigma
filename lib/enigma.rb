@@ -50,26 +50,26 @@ class Enigma
     end
   end
 
-  def encrypted_parts
+  def encrypted_parts(my_message)
+    binding.pry
     message_parts = @my_message.chars.each_slice(4).to_a
     encrypted_message_parts = message_parts.map do |part|
       encrypted_piece(part)
     end
-    encrypted_message_parts.join
+    encrypted_message_parts 
   end
   # => "encrypted message string"
 
   def encrypt(my_message, key = random_key, date = @todays_date)
     @date         = date
     @key          = key
-    @my_message   = my_message
     # binding.pry
-    return encrypted_parts
+    return encrypted_parts(my_message).join
   end
 
 
   def decrypt(encrypted_sting, key, date)
-    decrypted_slices = encrypted_parts.each_slice(4).to_a
+    decrypted_slices = encrypted_parts(encrypted_sting).each_slice(4).to_a
     decrypted_message_slices = decrypted_slices.map do |slice|
         decrypted_section(slice)
     end
@@ -93,8 +93,11 @@ class Enigma
   def decrypted_char(character, rotation, offset)
     char_array  = character_map.reverse
     sum = char_array.index(character) + rotation + offset
+    binding.pry
     encrypted_char = char_array[sum % char_array.length]
   end
 end
 
 
+e = Enigma.new
+e.decrypt("Hi", "82648", Date.today)
