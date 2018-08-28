@@ -40,7 +40,6 @@ class Enigma
     # key   =>  "82648"
     date_square = (@todays_date.to_i ** 2).to_s # => "62909669124"
     offsets     = date_square[-4..-1]    # => "9124"
-    
     rotation    = @key[0..1].to_i        # => "82"
     offset      = offsets[0].to_i        # => "9"
 
@@ -55,7 +54,7 @@ class Enigma
     encrypted_message_parts = message_parts.map do |part|
       encrypted_piece(part)
     end
-    encrypted_message_parts.join
+    encrypted_message_parts
   end
   # => "encrypted message string"
 
@@ -73,7 +72,7 @@ class Enigma
     decrypted_message_slices = decrypted_slices.map do |slice|
         decrypted_section(slice)
     end
-    decrypted_message_slices
+    decrypted_message_slices.join
     # require "pry"; binding.pry
   end
 
@@ -97,4 +96,7 @@ class Enigma
   end
 end
 
-
+e = Enigma.new
+a = e.encrypt("Hello World!", "12345", "270818")
+b = e.decrypt("t6iv7z y aak" , "12345", "270818")
+binding.pry
