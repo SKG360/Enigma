@@ -3,17 +3,17 @@
 require './lib/enigma'
 require 'pry'
 
-# encrypted_filename        = ARGV[0]
-# decrypted_file_desination = ARGV[1]
-# decryption_key            = ARGV[2]
-# decryption_date           = ARGV[3]
-# date = Date.today.strftime("%d%m%y")
 
-encrypted_filename         = "encrypted.txt"
-decrypted_file_destination = "decrypted.txt"
-decryption_key             = "12345"
-decryption_date            = "280818"
+encrypted_filename        = ARGV[0]
+decrypted_file_destination = ARGV[1]
+decryption_key            = ARGV[2]
+decryption_date           = ARGV[3]
+date = Date.today.strftime("%d%m%y")
 
+# encrypted_filename         = "encrypted.txt"
+# decrypted_file_destination = "decrypted.txt"
+# decryption_key             = "12345"
+# decryption_date            = "280818"
 
 def read_from_file(file)
     File.read(file)
