@@ -75,13 +75,14 @@ class Enigma
         current = array.map do |element|
             character_hash[element]
         end
+
         current.map do |element|
             if current.index(element) % 4 == 0
                 current.index(element) + offset_A
-
+                binding.pry
             elsif current.index(element) % 4 == 1
                 current.index(element) + offset_B
-
+                binding.pry
             elsif current.index(element) % 4 == 2
                 current.index(element) + offset_C
                 
@@ -93,14 +94,18 @@ class Enigma
 
     def encrypt(my_message, key, date)
       array = decompose_array(my_message)
+      binding.pry
       offsets = produce_index_array(array)
-      new_index = apply_offset_rotations(offsets)
+      binding.pry
+      new_index = apply_offset_rotations(array)
+      binding.pry
       new_string = recompose_string(new_index)
+      binding.pry
     end
 
 end
 
 
 e = Enigma.new
-# e.apply_offset_rotations(["h", "i", " ", "t", "h"])
+e.encrypt("Hello World", "12345", Date.today)
 binding.pry
