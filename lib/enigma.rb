@@ -69,7 +69,7 @@ class Enigma
 
 
   def decrypt(encrypted_sting, key, date)
-    decrypted_slices = encrypted_parts.chars.each_slice(4).to_a
+    decrypted_slices = encrypted_parts.each_slice(4).to_a
     decrypted_message_slices = decrypted_slices.map do |slice|
         decrypted_section(slice)
     end
