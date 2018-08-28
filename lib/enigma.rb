@@ -2,7 +2,7 @@ require 'pry'
 require 'date'
 
 class Enigma
-    attr_reader :key # why is this here?
+    attr_reader :key
 
   def initialize
     @characters   = []
@@ -72,7 +72,6 @@ class Enigma
           decrypted_section(slice)
       end
       decrypted_message_slices
-require "pry"; binding.pry
     end
 
     def decrypted_section(slice)

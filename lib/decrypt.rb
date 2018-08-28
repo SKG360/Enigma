@@ -12,7 +12,6 @@ date = Date.today.strftime("%d%m%y")
 # decryption_key             = "12345"
 # decryption_date            = "280818"
 
-
 def read_from_file(file)
     File.read(file)
 end # => "6895k9gk5cy5r3fr6yzlrb4ll"
