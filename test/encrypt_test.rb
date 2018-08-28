@@ -7,7 +7,7 @@ class EncryptTest < Minitest::Test
 
 
     def test_it_can_read_local_directory
-        skip
+        # skip
         e = Encrypt.new("message.txt", "encrypted.txt")
         assert_equal ["message.txt"], e.check_local_files
         # this fails for the right reasons
@@ -33,20 +33,19 @@ class EncryptTest < Minitest::Test
 
         #these two methods are WIP, failing properly
     def test_it_can_find_duplicate_target_destinations
-        skip 
+        # skip 
         e = Encrypt.new("message.txt", "encrypted.txt")
         assert_equal false, e.found_duplicate_file?
     end
-    def test_it_gives_warning_before_overwriting_destination_file
-        skip
-        e = Encrypt.new("message.txt", "encrypted.txt")
-        assert_equal false, e.found_duplicate_file?
-    end
+   
 
     def test_it_can_read_output_file_for_output_string
         skip
-        e = Encrypt.new("message.txt", "encrypted.txt")
-        assert_equal "A string of encrypted data", e.read_from_file("encrypted.txt")
+        enigma = Enigma.new
+        enigma.encrypt("this is so secret ..end..", "82648", "240818")
+        
+
+        assert_equal "6uv5kv5k51k5rp4r6kllr0qll", e.read_from_file("encrypted.txt")
     end
 
     def test_it_can_transfer
