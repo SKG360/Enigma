@@ -65,6 +65,7 @@ class EnigmaTest < Minitest::Test
     # skip
     e = Enigma.new
     assert_equal [7, 8, 36, 19], e.encrypt_four(["H", "i", " ", "t"])
+  end
 
   def test_it_can_encrypt_message
     e = Enigma.new
@@ -91,32 +92,29 @@ class EnigmaTest < Minitest::Test
     assert_equal "this", e.decrypted_char("y895", 82, 9)
   end
 
+  def test_the_rotation_index_value
 
-
-
-
-
-
-
-
+      e = Enigma.new
+      date = Date.today.strftime("%d%m%y")
+      key = "82648"
+      e.encrypt("this is so secret ..end..", key, date)
+      assert_equal 55, e.encrypted_piece(['t','h','i','s'])
+      # e.encrypted_char('t', 66, 88) #<~~ dummy digits
+  end
 
   #test_default_date_is_today
 
-
   #test_default_key_is_generated
 
-
-
   def test_it_calculates_last_four_of_date
-    skip 
+    skip
     e = Enigma.new
     date = "260818"
     assert_equal "9124", e.last_four(date)
   end
 
-
   def test_it_calculates_ecryption_rotations
-    skip 
+    skip
     e = Enigma.new
     date = "260818"
     key = "57894"
@@ -127,7 +125,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_different_types_same_character
-    skip 
+    skip
     e = Enigma.new
     assert_equal "1", e.encrypted_character("a", "A")
     assert_equal "t", e.encrypted_character("a", "B")
@@ -136,7 +134,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_same_type_different_character
-    skip 
+    skip
     e = Enigma.new
     assert_equal "1", e.encrypted_character("a", "A")
     assert_equal "2", e.encrypted_character("b", "A")

@@ -11,6 +11,13 @@ class Enigma
     @todays_date  = Date.today.strftime("%m%d%y")
   end
 
+  def encrypt(my_message, key = random_key, date = @todays_date)
+    @date         = date
+    @key          = key
+    # binding.pry
+    return encrypted_parts(my_message).join
+  end
+  
   def character_map
     letters_array = [*'a'..'z']
     numbers_array = [*'0'..'9']
@@ -18,7 +25,7 @@ class Enigma
     return letters_array + numbers_array + other
   end # => full character array [a...,].count => 39
 
-  def random_key 
+  def random_key
     key_string = ""
     5.times do
         key_string += rand(9).ceil.to_s
@@ -27,10 +34,11 @@ class Enigma
   end # => five digit string
 
   def encrypted_char(character, rotation, offset)
+    require "pry"; binding.pry
     char_array  = character_map
     sum = char_array.index(character).to_i + rotation + offset
     char_array[sum % char_array.length]  # => "string"
-  end # => character = "t" 
+  end # => character = "t"
       # sum % char_array.length => 21
       # => char_array[sum % char_array.length] = "b"
 
@@ -40,10 +48,9 @@ class Enigma
     # key   =>  "82648"
     date_square = (@todays_date.to_i ** 2).to_s # => "62909669124"
     offsets     = date_square[-4..-1]    # => "9124"
-    
+    require "pry"; binding.pry
     rotation    = @key[0..1].to_i        # => "82"
     offset      = offsets[0].to_i        # => "9"
-
     #Refactor with an enumerable
     part.map.with_index do |char, index|
       encrypted_char(char, @key[index..index + 1].to_i, offsets[index].to_i)
@@ -51,21 +58,15 @@ class Enigma
   end
 
   def encrypted_parts(my_message)
-    binding.pry
-    message_parts = @my_message.chars.each_slice(4).to_a
+
+    message_parts = my_message.chars.each_slice(4).to_a
     encrypted_message_parts = message_parts.map do |part|
       encrypted_piece(part)
     end
-    encrypted_message_parts 
+    encrypted_message_parts
   end
   # => "encrypted message string"
 
-  def encrypt(my_message, key = random_key, date = @todays_date)
-    @date         = date
-    @key          = key
-    # binding.pry
-    return encrypted_parts(my_message).join
-  end
 
   def decrypt(encrypted_sting, key, date)
     decrypted_slices = encrypted_parts(encrypted_sting).each_slice(4).to_a
