@@ -67,7 +67,6 @@ class Enigma
     return encrypted_parts(my_message).join
   end
 
-
   def decrypt(encrypted_sting, key, date)
     decrypted_slices = encrypted_parts(encrypted_sting).each_slice(4).to_a
     decrypted_message_slices = decrypted_slices.map do |slice|
