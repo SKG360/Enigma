@@ -28,9 +28,9 @@ class Enigma
       letters_array = [*'a'..'z']
       numbers_array = [*'0'..'9']
       other = [" ", ".", ","]
-      special = ["!","@","#","$","%","^",
-      "&","*","(",")","[","]","<",">",";",
-      ":","/","?","\''","|", "'"]
+      special = ["!", "@", "#", "$", "%", "^", 
+      "&", "*", "(", ")", "[", "]", "<", ">", ";", 
+      ":", "/", "?", "\'", "|",  "'"]
       return letters_array + numbers_array + other + special
   end #this is good because it scales
 
@@ -93,13 +93,3 @@ class Enigma
     end.join
   end
 end 
-
-
-
-# my_message = "abcdabcd"             # File.read("message.txt")
-# key = "82648"                       # rand(99999).to_s
-# date = Date.new(2018,8,17)          # Date.today.strftime("%m%d%y")
-
-# e = Enigma.new
-# a = e.encrypt(my_message, key, date)
-# b = e.decrypt(a, key, date)
