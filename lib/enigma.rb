@@ -83,6 +83,7 @@ class Enigma
   end
 
   def decrypt(my_message, key, date)
+    binding.pry
     @key = key
     @date = date
     message= decompose_to_array(my_message)
@@ -94,7 +95,7 @@ end
 
 
 
-my_message = "abcdabcd"          # File.read("message.txt")
+my_message = "abcdabcd"             # File.read("message.txt")
 key = "82648"                       # rand(99999).to_s
 date = Date.new(2018,8,17)          # Date.today.strftime("%m%d%y")
 

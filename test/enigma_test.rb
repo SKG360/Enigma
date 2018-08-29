@@ -68,8 +68,6 @@ class EnigmaTest < Minitest::Test
         assert_equal 49, @e.offset(3)
     end
 
- 
-
     def test_it_produces_correct_array
         expected = [22, 26, 39, 53, 26, 30, 43, 57, 30]
         assert_equal expected, @e.shift_character_index([1,2,3,4,5,6,7,8,9])
@@ -79,5 +77,15 @@ class EnigmaTest < Minitest::Test
       expected = "!5ss*e3*[sk"
       assert_equal expected, @e.encrypt(@my_message, @key_string, @date_string)
     end
+
+    def test_decrypt_output
+      output = @e.encrypt(@my_message, @key_string, @date_string)
+      binding.pry
+      assert_equal @my_message, @e.decrypt(output, @key_string, @date_string)
+    end
+
+    
+    
+
 
 end
