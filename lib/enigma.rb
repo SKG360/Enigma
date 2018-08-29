@@ -28,10 +28,10 @@ class Enigma
       letters_array = [*'a'..'z']
       numbers_array = [*'0'..'9']
       other = [" ", ".", ","]
-      special = ["!", "@", "#", "$", "%", "^", 
-      "&", "*", "(", ")", "[", "]", "<", ">", ";", 
-      ":", "/", "?", "\'", "|",  "'"]
-      return letters_array + numbers_array + other + special
+      # special = ["!", "@", "#", "$", "%", "^", 
+      # "&", "*", "(", ")", "[", "]", "<", ">", ";", 
+      # ":", "/", "?", "\'", "|",  "'"]
+      return letters_array + numbers_array + other #+ special
   end #this is good because it scales
 
   def character_hash
@@ -50,13 +50,13 @@ class Enigma
 
   def offset(type)
       if type == 0
-          (key[0..1].to_i + last_four_of_date_squared(date)[0].to_i) % character_map.length
+          (key[0..1].to_i + last_four_of_date_squared(date)[0].to_i)
       elsif type == 1
-          (key[1..2].to_i + last_four_of_date_squared(date)[1].to_i) % character_map.length
+          (key[1..2].to_i + last_four_of_date_squared(date)[1].to_i)
       elsif type == 2
-          (key[2..3].to_i + last_four_of_date_squared(date)[2].to_i) % character_map.length
+          (key[2..3].to_i + last_four_of_date_squared(date)[2].to_i)
       elsif type == 3
-          (key[3..4].to_i + last_four_of_date_squared(date)[3].to_i) % character_map.length
+          (key[3..4].to_i + last_four_of_date_squared(date)[3].to_i)
       end
   end
 
@@ -67,10 +67,19 @@ class Enigma
   end    
 
   def shift_character_index(array_of_index_nums)
-      array_of_index_nums.map do |num|
-        num + offset(array_of_index_nums.index(num) % 4)
-        # binding.pry
-      end
+    i = -1  
+    array_of_index_nums.map do |num|
+      i += 1
+      (num + (offset(i % 4)) ) % character_map.length
+    end
+  end
+
+  def unshift_character_index(array_of_index_nums)
+    i = -1  
+    array_of_index_nums.map do |num|
+      i += 1
+      (num - (offset(i % 4)) ) % character_map.length
+    end
   end
   
   def encrypt(my_message, key, date)
@@ -78,18 +87,19 @@ class Enigma
     @date = date
     shift_character_index(decompose_to_array(my_message)).map do |value|
       character_hash.invert[value]
-      
     end.join
   end
 
   def decrypt(my_message, key, date)
     @key = key
     @date = date
-    message= decompose_to_array(my_message)
-    i = -1
-    message.map do |value|
-      i += 1
-      character_hash.invert[value - offset(i % 4)]
+    unshift_character_index(decompose_to_array(my_message)).map do |value|
+      character_hash.invert[value]
     end.join
   end
 end 
+
+e = Enigma.new
+a = e.encrypt("this is so secret", 12345, Date.today)
+b = e.decrypt(a, 12345, Date.today)
+binding.pry
