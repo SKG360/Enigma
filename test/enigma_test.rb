@@ -84,8 +84,4 @@ class EnigmaTest < Minitest::Test
       assert_equal @my_message, @e.decrypt(output, @key_string, @date_string)
     end
 
-    
-    
-
-
 end

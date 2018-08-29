@@ -60,6 +60,20 @@ class Enigma
       end
   end
 
+  def encrypt(my_message, key = random_key, date = @todays_date)
+        @date  = date
+        @key   = key
+    return encrypted_parts(my_message).join
+  end
+
+  def random_key
+    key_string = ""
+    5.times do
+        key_string += rand(9).ceil.to_s
+    end
+    return key_string
+  end # => five digit string
+
   def decompose_to_array(message_string)
     message_string.split("").map do |character|
       character_hash[character.downcase]
@@ -89,10 +103,8 @@ class Enigma
     message= decompose_to_array(my_message)
     message.map do |value|
       character_hash.invert[value - offset(message.index(value) % 3)]
-    end.join
-  end
+  end.join
 end 
-
 
 
 my_message = "abcdabcd"             # File.read("message.txt")
