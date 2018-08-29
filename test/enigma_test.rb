@@ -18,88 +18,90 @@ class EnigmaTest < Minitest::Test
     "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
     assert_equal expected, e.character_map
   end
-
-  def test_that_it_generates_five_character_key_string
-
-    e = Enigma.new
-    actual = e.random_key.length
-    assert_equal 5, actual
-  end
-
-    # to prevent letters, or characters from being in key
-  def test_it_rejects_non_integer_string_character
-
-    e = Enigma.new
-    key = "a5555"
-    date = Date.new(2017,8,26).strftime("%d%m%y") # "270818"
-    encr = e.encrypt("Hello", key, date)
-    assert_equal 0, e.key.to_i
-  end
-
-  def test_it_converts_key_string_to_integer
-
-    e = Enigma.new
-    date = Date.new(2017,8,26).strftime("%d%m%y")
-    key = "55555"
-    e.encrypt("Hello", key, date)
-    assert_equal key, e.key
-  end
-
-  def test_one_encrypted_char
-    e = Enigma.new
-    date = Date.new(2017,8,26).strftime("%d%m%y")
-    key = "82648"
-    actual = e.encrypted_char("this is so secret ..end.."[0], key[0..1].to_i, "9".to_i)
-    assert_equal "6", actual
-  end
-
-  def test_one_sliced_message_part
-    e = Enigma.new
-    date = Date.today.strftime("%d%m%y")
-    key = "82648"
-    e.encrypt("this is so secret ..end..", key, date)
-    assert_equal ["6", "8", "9", "5"], e.encrypted_parts[0..3].chars
-  end
-
-  def test_it_can_encrypt_four_string_character_array
-    # skip
-    e = Enigma.new
-    assert_equal [7, 8, 36, 19], e.encrypt_four(["H", "i", " ", "t"])
-  end
-
-  def test_it_can_encrypt_message
-    e = Enigma.new
-    date = Date.today.strftime("%d%m%y")
-    key = "82648"
-
-    expected = "6895k9gk5cy5r3fr6yzlrb4ll"
-    assert_equal expected, e.encrypt("this is so secret ..end..", key, date)
-  end
-
-  def test_the_first_slice_of_the_encrypted_message
-    e = Enigma.new
-    date = Date.today.strftime("%d%m%y")
-    key = "82648"
-
-    e.encrypt("this is so secret ..end..", key, date)
-    assert_equal ["6", "8", "9", "5"], e.encrypted_piece(['t','h','i','s'])
-  end
-
-  def test_the_decrypted_character
-    e = Enigma.new
-    date = Date.today.strftime("%d%m%y")
-    key = "82648"
-    assert_equal "this", e.decrypted_char("y895", 82, 9)
-  end
+  #
+  # def test_that_it_generates_five_character_key_string
+  #
+  #   e = Enigma.new
+  #   actual = e.random_key.length
+  #   assert_equal 5, actual
+  # end
+  #
+  #   # to prevent letters, or characters from being in key
+  # def test_it_rejects_non_integer_string_character
+  #
+  #   e = Enigma.new
+  #   key = "a5555"
+  #   date = Date.new(2017,8,26).strftime("%d%m%y") # "270818"
+  #   encr = e.encrypt("Hello", key, date)
+  #   assert_equal 0, e.key.to_i
+  # end
+  #
+  # def test_it_converts_key_string_to_integer
+  #
+  #   e = Enigma.new
+  #   date = Date.new(2017,8,26).strftime("%d%m%y")
+  #   key = "55555"
+  #   e.encrypt("Hello", key, date)
+  #   assert_equal key, e.key
+  # end
+  #
+  # def test_one_encrypted_char
+  #   e = Enigma.new
+  #   date = Date.new(2017,8,26).strftime("%d%m%y")
+  #   key = "82648"
+  #   actual = e.encrypted_char("this is so secret ..end.."[0], key[0..1].to_i, "9".to_i)
+  #   assert_equal "6", actual
+  # end
+  #
+  # def test_one_sliced_message_part
+  #   e = Enigma.new
+  #   date = Date.today.strftime("%d%m%y")
+  #   key = "82648"
+  #   e.encrypt("this is so secret ..end..", key, date)
+  #   assert_equal ["6", "8", "9", "5"], e.encrypted_parts[0..3].chars
+  # end
+  #
+  # def test_it_can_encrypt_four_string_character_array
+  #   # skip
+  #   e = Enigma.new
+  #   assert_equal [7, 8, 36, 19], e.encrypt_four(["H", "i", " ", "t"])
+  # end
+  #
+  # def test_it_can_encrypt_message
+  #   e = Enigma.new
+  #   date = Date.today.strftime("%d%m%y")
+  #   key = "82648"
+  #
+  #   expected = "6895k9gk5cy5r3fr6yzlrb4ll"
+  #   assert_equal expected, e.encrypt("this is so secret ..end..", key, date)
+  # end
+  #
+  # def test_the_first_slice_of_the_encrypted_message
+  #   e = Enigma.new
+  #   date = Date.today.strftime("%d%m%y")
+  #   key = "82648"
+  #
+  #   e.encrypt("this is so secret ..end..", key, date)
+  #   assert_equal ["6", "8", "9", "5"], e.encrypted_piece(['t','h','i','s'])
+  # end
+  #
+  # def test_the_decrypted_character
+  #   e = Enigma.new
+  #   date = Date.today.strftime("%d%m%y")
+  #   key = "82648"
+  #   assert_equal "this", e.decrypted_char("y895", 82, 9)
+  # end
 
   def test_the_rotation_index_value
+    e = Enigma.new
+    date = Date.today.strftime("%d%m%y")
+    key = "82648"
+    output = "hey thisis whats up"
+    e.encrypt("this is so secret ..end..", key, date)
 
-      e = Enigma.new
-      date = Date.today.strftime("%d%m%y")
-      key = "82648"
-      e.encrypt("this is so secret ..end..", key, date)
-      assert_equal 55, e.encrypted_piece(['t','h','i','s'])
-      # e.encrypted_char('t', 66, 88) #<~~ dummy digits
+    # assert_equal 'this is', e.decrypted_char(output, key.to_i, date.to_i)
+    assert_equal 55, e.decrypted_section(['t','h','i','s'])
+    # e.encrypted_char('t', 66, 88) #<~~ dummy digits
   end
 
   #test_default_date_is_today
@@ -159,10 +161,10 @@ class EnigmaTest < Minitest::Test
   #   assert_equal "1uwz", e.encrypt_four(["a","b","c","d"])
   # end
 
-  def test_it_can_encrypt_phrase
-    # skip
-    e = Enigma.new
-    assert_equal "8x57cqd f4xw", e.encrypted_text("Hello World!")
-    assert_equal "81tt3t7t9qaw,3rccqw3i w3945w", e.encrypted_text("Hi, can I talk to Churchill?")
-  end
+  # def test_it_can_encrypt_phrase
+  #   # skip
+  #   e = Enigma.new
+  #   assert_equal "8x57cqd f4xw", e.encrypted_text("Hello World!")
+  #   assert_equal "81tt3t7t9qaw,3rccqw3i w3945w", e.encrypted_text("Hi, can I talk to Churchill?")
+  # end
 end
