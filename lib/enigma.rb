@@ -60,6 +60,20 @@ class Enigma
       end
   end
 
+  def encrypt(my_message, key = random_key, date = @todays_date)
+        @date  = date
+        @key   = key
+    return encrypted_parts(my_message).join
+  end
+
+  def random_key
+    key_string = ""
+    5.times do
+        key_string += rand(9).ceil.to_s
+    end
+    return key_string
+  end # => five digit string
+
   def decompose_to_array(message_string)
     message_string.split("").map do |character|
       character_hash[character.downcase]
@@ -93,13 +107,10 @@ class Enigma
   def decrypt(my_message, key, date)
     @key = key
     @date = date
+
     unshift_character_index(decompose_to_array(my_message)).map do |value|
       character_hash.invert[value]
     end.join
   end
 end 
 
-e = Enigma.new
-a = e.encrypt("this is so secret", 12345, Date.today)
-b = e.decrypt(a, 12345, Date.today)
-binding.pry

@@ -98,12 +98,6 @@ class EnigmaTest < Minitest::Test
         assert_equal " ", e.character_hash.invert[36]
     end
 
-    
-    def test_encryption_loop
-        i = 4
-        assert_equal @e.offset(0), @e.offset(i % 4)
-    end                                 
-
-
 
 end
+
