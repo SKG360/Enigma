@@ -25,6 +25,5 @@ end
 
 enigma = Enigma.new
 encrypted_message = read_from_file(encrypted_filename)
-# decrypted_string = enigma.decrypt(encrypted_message, decryption_key, decryption_date)
-decrypted_string = "Hello Nurse!"
+decrypted_string = enigma.decrypt(encrypted_message, decryption_key, decryption_date)
 write_to_file(decrypted_file_destination, decrypted_string)
