@@ -80,7 +80,6 @@ class EnigmaTest < Minitest::Test
 
     def test_decrypt_output
       output = @e.encrypt(@my_message, @key_string, @date_string)
-      binding.pry
       assert_equal @my_message, @e.decrypt(output, @key_string, @date_string)
     end
 
